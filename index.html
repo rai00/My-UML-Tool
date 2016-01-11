@@ -1,0 +1,269 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.indigo-pink.min.css">
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+</head>
+<body style="width:100%;height:100%;">
+    <!-- Number badge -->
+    <div class="mdl-badge" data-badge="4">Inbox</div>
+ 
+    <!-- Left aligned menu below button -->
+    <button id="demo-menu-lower-left"
+            class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">+</i>
+    </button>
+
+    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+        for="demo-menu-lower-left">
+        <li class="mdl-menu__item">Some Action</li>
+        <li class="mdl-menu__item">Another Action</li>
+        <li disabled class="mdl-menu__item">Disabled Action</li>
+        <li class="mdl-menu__item">Yet Another Action</li>
+    </ul>
+
+
+
+    <button onclick="add()">addClass</button>
+    <div id="content" style="width:100%;height:100%;"></div>
+
+    <style>
+        html *{         
+            font-family: Arial !important;
+            font-size:14px;
+        }
+        *:focus {
+            outline: 0;
+        }
+        button{
+            position:absolute;
+            bottom:0;
+            width:20px;
+            height:20px;
+            
+        }
+
+        /* Contenedor Total */
+        .class-container{
+            min-width: 100px;
+            min-height: 100px;
+            border: 5px solid;
+            position:absolute;
+            background-color:#fff;
+            padding-bottom:20px;
+            
+        }
+
+        /* Contenedor del Nom */
+        .name-container{
+             border-bottom:1px solid;
+             height:20px;
+        }
+        .name-label{
+            text-align:center;
+            text-overflow:ellipsis;
+            overflow:hidden;
+            white-space:nowrap;
+            display: block; 
+            height:20px;
+            line-height:20px;
+        }
+        .name-input{
+            text-align:center;
+            border: 0;
+            height:20px;
+            display:none;
+            width:100%;
+        }
+
+        /* Contenedor dels Atributs */
+        .atributes-container{
+             display:table;
+             border-collapse: separate;
+        }
+        .atribute-item-container{
+            height:20px;
+             display:table-row;
+        }
+        .atribute-label{
+            display: block; 
+            height:20px;
+            line-height:20px;
+            margin-left:5px;
+            margin-right:5px;
+        }
+        .atribute-input{
+            border: 0;
+            height:20px;
+            display:none;
+            width: 100%;
+            padding-left:5px;
+        }
+
+        /* Contenedor de les Funcions */
+        .function-container{}
+        
+        .a{
+            display:table-cell;
+            width:20px;
+            /*background-color:#ff0000;*/
+            text-align:center;
+
+            
+        }
+        .b,.c{
+             display:table-cell;
+        }
+    </style>
+    <script>
+
+        //Afegeix una clase...
+        function add() {
+
+            //Agafa el numero de classes existents, per saber quina id agafara la seguent en ser creada
+            var classes_number = $("#content > div.class-container").length;
+            //Afegeix la clase, agafant per id "classes_number"
+            $("#content").append("<div id='class-" + classes_number + "' class='class-container'></div>");
+
+            /* CLASE */
+            //Agafa la clase que acaba de crear....
+            var class_container = $("#class-" + classes_number);
+            //Hi afegeix el contenedor del nom...
+            class_container.append("<div id='classname-content' class='name-container'></div>");
+            //Hi afegeix també el contenedor dels atributs...
+            class_container.append("<div class='atributes-container'><button id='"+classes_number+"' onclick='addAtr(this.id)'>+</button></div>");
+            
+
+            //Agafa el contenedor del nom que acaba de crear...
+            var class_name_container = $("#class-" + classes_number + " > #classname-content");
+            //Hi afegeix el label
+            class_name_container.append("<label class='name-label'>Class</label>");
+            //Hi afegeix el textbox ocult
+            class_name_container.append("<input type='text' class='name-input' />");
+
+            
+            /* ATRIBUTS */
+            //Agafa el numero d'atributs existents dins la clase actual...
+            var atrr_number = $("#class-" + classes_number + " > .atribute-item-container > div").length;
+            //Agafa el contenedor dels atributs que acaba de crear...
+            var atrr_container = $("#class-" + classes_number + " > .atributes-container");
+            //Afegeix al contenidor d'atributs un contenidor atribut...
+            atrr_container.append("<div id='attr-" + atrr_number + "_class-" + classes_number + "' class='atribute-item-container'></div>")
+
+            /*  ATRIBUT */
+            //Agafa l'element atribut que acaba de crear...
+            var atrr = $("#class-" + classes_number + " > .atributes-container > #attr-" + atrr_number + "_class-" + classes_number);
+            //Afegeix el contenidor del icono del atribut
+            atrr.append("<div class='a'></div>");
+            //Afegeix el contenidor del nom del atribut
+            atrr.append("<div class='b'></div>");
+            //Afegeix el contenidor del tipus del atribut
+            atrr.append("<div class='c'></div>");
+
+            //Agafa el contenidor del icono que acaba de crear...
+            var a = $("#class-" + classes_number + " > .atributes-container> #attr-" + atrr_number + "_class-" + classes_number + "> .a");
+            //Agafa el contenidor del nom que acaba de crear...
+            var b = $("#class-" + classes_number + " > .atributes-container > #attr-" + atrr_number + "_class-" + classes_number + "> .b");
+            //Agafa el contenidor del tipus que acaba de crear...
+            var c = $("#class-" + classes_number + " > .atributes-container > #attr-" + atrr_number + "_class-" + classes_number + "> .c");
+
+            a.append("&#128274;");
+            //Hi afegeix el label
+            b.append("<label class='atribute-label'>Name</label>");
+            //Hi afegeix el textbox ocult
+            b.append("<input class='atribute-input' type='text'/>");
+            
+            //Hi afegeix el label
+            c.append("<label class='atribute-label'>Type</label>");
+            //Hi afegeix el textbox ocult
+            c.append("<input class='atribute-input' type='text'/>");
+    
+
+            $(".class-container").draggable();
+            
+            /*Doble click a un label...*/
+            $(".name-label, .atribute-label").dblclick(function () {
+                var dad = $(this).parent();
+                var text = $(this).text();
+                var width = dad.width()-5; //On 5 es els pixels de margin...
+                dad.find('label').hide();
+                dad.find('input[type="text"]').show().focus().width(width);
+                dad.find('input[type="text"]').val(text);
+            });
+            /* Quan el input perd el focus... */
+            $('input[type=text]').focusout(function () {
+                var dad = $(this).parent();
+                var text = $(this).val();
+
+                $(this).hide();
+                dad.find('label').show();
+                dad.find('label').text(text);
+            });
+
+        }
+        function addAtr(id) {
+         
+            var classes_number = id;
+            
+            var atrr_number = $("#class-" + classes_number + " > .atributes-container > div").length;
+          
+            $("#class-" + classes_number + " > .atributes-container").append("<div id='attr-" + atrr_number + "_class-" + classes_number + "' class='atribute-item-container'></div>");
+
+         
+
+            //Afegeix el label i el input al atribut
+            var atrr = $("#class-" + classes_number + " > .atributes-container > #attr-" + atrr_number + "_class-" + classes_number);
+            atrr.append("<div class='a'></div>");
+            atrr.append("<div class='b'></div>");
+            atrr.append("<div class='c'></div>");
+
+            var a = $("#class-" + classes_number + " > .atributes-container> #attr-" + atrr_number + "_class-" + classes_number + "> .a");
+            var b = $("#class-" + classes_number + " > .atributes-container > #attr-" + atrr_number + "_class-" + classes_number + "> .b");
+            var c = $("#class-" + classes_number + " > .atributes-container > #attr-" + atrr_number + "_class-" + classes_number + "> .c");
+
+            a.append("&#128274;");
+            //hi afegeix el label
+            b.append("<label class='atribute-label'>Name</label>");
+            //Hi afegeix el textbox ocult
+            b.append("<input class='atribute-input' type='text'/>");
+
+            //hi afegeix el label
+            c.append("<label class='atribute-label'>Type</label>");
+            //Hi afegeix el textbox ocult
+            c.append("<input class='atribute-input' type='text'/>");
+
+            //EEEEEEEEEEEEEEEEEEE BOOOOOORRRRRA AIIIIXOOOOOO
+            $(".a").dblclick(function () {
+                $(this).empty();
+                $(this).append("&#128275;");
+            });
+
+
+            $(".name-label, .atribute-label").dblclick(function () {
+                var dad = $(this).parent();
+                var text = $(this).text();
+                var width = dad.width()-5;
+                dad.find('label').hide();
+                dad.find('input[type="text"]').show().focus().width(width);
+                dad.find('input[type="text"]').val(text);
+            });
+
+            $('input[type=text]').focusout(function () {
+                var dad = $(this).parent();
+                var text = $(this).val();
+                $(this).hide();
+                dad.find('label').show();
+                dad.find('label').text(text);
+            });
+
+        }
+
+    </script>
+</body>
+</html>
